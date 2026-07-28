@@ -169,8 +169,8 @@ export default function Home() {
 
     if (msg.type === "contact" && msg.data) {
       return (
-        <div className="flex flex-col w-full sm:max-w-[450px] py-4 gap-6">
-          <p className="whitespace-pre-line text-neutral-800 text-[16px] leading-relaxed">
+        <div className="flex flex-col w-full sm:max-w-[600px] py-2 gap-5">
+          <p className="whitespace-pre-line text-neutral-800 text-[15px] leading-relaxed">
             {msg.content}
           </p>
 
