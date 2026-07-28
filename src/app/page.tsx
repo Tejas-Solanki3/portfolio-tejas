@@ -169,7 +169,7 @@ export default function Home() {
 
     if (msg.type === "contact" && msg.data) {
       return (
-        <div className="flex flex-col w-full sm:max-w-[550px] py-2">
+        <div className="flex flex-col w-full sm:max-w-[750px] py-2">
           <div className="bg-white/90 backdrop-blur-md border border-neutral-200/80 rounded-[1.5rem] rounded-tl-sm p-5 sm:p-6 shadow-sm flex flex-col gap-6">
             <p className="whitespace-pre-line text-neutral-800 text-[15px] leading-relaxed">
               {msg.content}
