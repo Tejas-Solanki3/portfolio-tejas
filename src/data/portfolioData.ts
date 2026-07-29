@@ -12,10 +12,10 @@ export const portfolioData = {
     email: "tejassolanki176@gmail.com"
   },
   skills: [
-    { category: "Frontend", items: ["React JS", "Next JS", "JavaScript", "HTML5", "CSS3"] },
-    { category: "Backend & Frameworks", items: ["Node.js", "Express.js", "Python (Flask)"] },
-    { category: "Databases & Tools", items: ["MySQL", "MongoDB", "REST API Integration"] },
-    { category: "AI & Computer Vision", items: ["MediaPipe", "OpenCV", "pywinauto", "pynput"] }
+    { category: "Frontend", skills: ["React JS", "Next JS", "JavaScript", "HTML5", "CSS3"] },
+    { category: "Backend & Frameworks", skills: ["Node.js", "Express.js", "Python (Flask)"] },
+    { category: "Databases & Tools", skills: ["MySQL", "MongoDB", "REST API Integration"] },
+    { category: "AI & Computer Vision", skills: ["MediaPipe", "OpenCV", "pywinauto", "pynput"] }
   ],
   projects: [
     {
