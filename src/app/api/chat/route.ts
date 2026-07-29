@@ -16,7 +16,6 @@ export async function POST(req: Request) {
     // Generate intelligent response using OpenRouter
     const { object } = await generateObject({
       model: openrouter('meta-llama/llama-3.1-8b-instruct'), // Standard Llama 3.1 8B (very cheap/fast)
-      mode: 'json', // Ensures compatibility with models that don't support strict JSON schemas
       schema: z.object({
         type: z.enum(["text", "projects", "skills", "me", "resume", "contact"]),
         response: z.string().describe("The conversational text to show the user. Be helpful, concise, and friendly. Answer questions about Tejas using the provided context."),
