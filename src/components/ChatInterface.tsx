@@ -36,6 +36,11 @@ export default function ChatInterface({ isChatMode, onSearch, isLoading, initial
             className="w-full border-none bg-transparent text-base text-neutral-800 placeholder:text-neutral-500 focus:outline-none"
             value={input}
             onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => {
+              // Stop events from bubbling up to window (prevents webgl-fluid spacebar splats)
+              e.stopPropagation();
+              e.nativeEvent.stopImmediatePropagation();
+            }}
           />
           <button
             type="submit"
