@@ -4,6 +4,7 @@ import ActionButtons from "@/components/ActionButtons";
 import ChatInterface from "@/components/ChatInterface";
 import FluidBackground from "@/components/FluidBackground";
 import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Message = {
   role: 'user' | 'bot';
@@ -240,12 +241,14 @@ export default function Home() {
         </div>
 
         {/* Header/Memoji Area */}
-        <div className={`flex flex-col-reverse items-center transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] shrink-0 z-20 ${isChatMode ? 'flex-row gap-3 w-full max-w-3xl justify-start items-center mb-6 bg-transparent' : 'mt-4 md:mt-12 mb-6 md:mb-8 text-center relative'}`}>
+        <motion.div layout className={`flex flex-col-reverse items-center shrink-0 z-20 ${isChatMode ? 'flex-row gap-3 w-full max-w-3xl justify-start items-center mb-6 bg-transparent' : 'mt-4 md:mt-12 mb-6 md:mb-8 text-center relative'}`}>
 
           {/* Memoji */}
-          <div
+          <motion.div
+            layout
             onClick={() => { window.location.href = '/'; }}
-            className={`relative overflow-hidden transition-all duration-700 ease-[cubic-bezier(0.2,0.8,0.2,1)] bg-white/10 cursor-pointer title="Back to home" ${isChatMode ? 'h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-white/50 shadow-md transform-none hover:scale-110' : 'h-36 w-36 sm:h-48 sm:w-48 md:h-56 md:w-56 mt-6 md:mt-8 shadow-none rounded-none hover:scale-105'}`}
+            className={`relative overflow-hidden bg-white/10 cursor-pointer title="Back to home" ${isChatMode ? 'h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-white/50 shadow-md hover:scale-110' : 'h-36 w-36 sm:h-48 sm:w-48 md:h-56 md:w-56 mt-6 md:mt-8 shadow-none rounded-[2rem] hover:scale-105'}`}
+            transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
             <img
               src="/memoji.png"
@@ -259,48 +262,62 @@ export default function Home() {
                 }
               }}
             />
-          </div>
+          </motion.div>
 
           {/* Hero text */}
-          <div className={`transition-all duration-700 pointer-events-none ${isChatMode ? 'text-left' : 'flex flex-col items-center text-center md:mb-6 animate-fade-in-up'}`} style={!isChatMode ? { opacity: 0, animationFillMode: 'forwards' } : {}}>
-            <h2 className={`text-neutral-800 font-bold transition-all duration-700 ${isChatMode ? 'text-sm' : 'mt-1 text-2xl md:text-3xl'}`}>
+          <motion.div layout className={`pointer-events-none ${isChatMode ? 'text-left' : 'flex flex-col items-center text-center md:mb-6'}`}>
+            <motion.h2 layout className={`text-neutral-800 font-bold ${isChatMode ? 'text-sm' : 'mt-1 text-2xl md:text-3xl'}`}>
               {isChatMode ? "Tejas Solanki" : "Hey, I'm Tejas Solanki"}
-            </h2>
-            <h1 className={`font-black tracking-tight text-neutral-900 transition-all duration-700 ${isChatMode ? 'text-lg tracking-normal' : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl mt-1'}`}>
+            </motion.h2>
+            <motion.h1 layout className={`font-black tracking-tight text-neutral-900 ${isChatMode ? 'text-lg tracking-normal' : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl mt-1'}`}>
               {isChatMode ? "Software Developer" : "Software Developer & AI/ML"}
-            </h1>
-          </div>
-        </div>
+            </motion.h1>
+          </motion.div>
+        </motion.div>
 
         {/* Chat Results Area */}
         {isChatMode && (
           <div className="flex-1 min-h-0 w-full max-w-3xl overflow-y-auto px-2 flex flex-col gap-6 mb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            {messages.map((msg, i) => (
-              <div key={i} className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-                {msg.role === 'user' ? (
-                  <div className="px-5 py-3.5 bg-blue-500 text-white rounded-3xl rounded-tr-sm max-w-[85%] text-[15px] leading-relaxed shadow-sm">
-                    {msg.content}
+            <AnimatePresence initial={false}>
+              {messages.map((msg, i) => (
+                <motion.div 
+                  key={i} 
+                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                  className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                >
+                  {msg.role === 'user' ? (
+                    <div className="px-5 py-3.5 bg-blue-500 text-white rounded-3xl rounded-tr-sm max-w-[85%] text-[15px] leading-relaxed shadow-sm">
+                      {msg.content}
+                    </div>
+                  ) : (
+                    renderBotMessage(msg)
+                  )}
+                </motion.div>
+              ))}
+              {isLoading && (
+                <motion.div 
+                  key="loader"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  className="flex w-full justify-start"
+                >
+                  <div className="px-5 py-4 bg-white/60 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 rounded-3xl rounded-tl-sm flex gap-1 items-center h-[52px]">
+                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                   </div>
-                ) : (
-                  renderBotMessage(msg)
-                )}
-              </div>
-            ))}
-            {isLoading && (
-              <div className="flex w-full justify-start">
-                <div className="px-5 py-4 bg-white/60 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 rounded-3xl rounded-tl-sm flex gap-1 items-center h-[52px]">
-                  <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                  <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                  <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
-                </div>
-              </div>
-            )}
+                </motion.div>
+              )}
+            </AnimatePresence>
             <div ref={chatEndRef} />
           </div>
         )}
 
         {/* Interactive area (Input & Buttons) */}
-        <div className={`z-10 flex w-full flex-col items-center justify-center transition-all duration-700 shrink-0 ${isChatMode ? 'mt-auto pb-4' : 'mt-2 md:px-0 animate-fade-in-up delay-200'} `} style={!isChatMode ? { opacity: 0, animationFillMode: 'forwards' } : {}}>
+        <motion.div layout className={`z-10 flex w-full flex-col items-center justify-center shrink-0 ${isChatMode ? 'mt-auto pb-4' : 'mt-2 md:px-0'}`}>
           {isChatMode ? (
             <ChatInterface isChatMode={isChatMode} onSearch={handleSearch} isLoading={isLoading} />
           ) : (
@@ -309,7 +326,7 @@ export default function Home() {
               <ActionButtons isChatMode={isChatMode} onActionClick={handleSearch} />
             </>
           )}
-        </div>
+        </motion.div>
       </div>
 
       {/* PDF Preview Modal */}
