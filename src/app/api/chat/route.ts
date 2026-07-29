@@ -4,13 +4,13 @@ import { generateObject } from 'ai';
 import { z } from 'zod';
 import { portfolioData } from '@/data/portfolioData';
 
-// Initialize OpenRouter provider
-const openrouter = createOpenRouter({
-  apiKey: process.env.OPENROUTER_API_KEY || '',
-});
-
 export async function POST(req: Request) {
   try {
+    // Initialize OpenRouter provider inside the handler to guarantee runtime environment variable loading on Vercel
+    const openrouter = createOpenRouter({
+      apiKey: process.env.OPENROUTER_API_KEY || '',
+    });
+
     const { message } = await req.json();
 
     // Generate intelligent response using OpenRouter
