@@ -39,10 +39,10 @@ export const portfolioData = {
     email: "tejassolanki176@gmail.com"
   },
   skills: [
-    { category: "Frontend", skills: ["HTML5", "CSS3", "JavaScript", "React.js", "Next.js"] },
+    { category: "AI / ML & Automation", skills: ["Computer Vision", "OpenCV", "MediaPipe", "Face Recognition", "Generative AI & LLMs", "pywinauto", "pynput"] },
     { category: "Backend & APIs", skills: ["Node.js", "Express.js", "Python", "Flask", "REST APIs", "API Integrations"] },
     { category: "Database & Languages", skills: ["MySQL", "MongoDB", "Python", "Java", "C++"] },
-    { category: "AI / ML & Automation", skills: ["Computer Vision", "OpenCV", "MediaPipe", "Face Recognition", "Generative AI & LLMs", "pywinauto", "pynput"] }
+    { category: "Frontend", skills: ["HTML5", "CSS3", "JavaScript", "React.js", "Next.js"] }
   ],
   projects: [
     {
