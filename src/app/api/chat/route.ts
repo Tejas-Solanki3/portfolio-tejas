@@ -7,20 +7,45 @@ import fs from 'fs';
 import path from 'path';
 import { extractText } from 'unpdf';
 
-// Helper function to dynamically read and parse resume.pdf in realtime
+// Polyfill Math.sumPrecise if not available in runtime
+if (typeof (Math as any).sumPrecise !== 'function') {
+  (Math as any).sumPrecise = (values: Iterable<number>) => {
+    let sum = 0;
+    for (const v of values) {
+      sum += v;
+    }
+    return sum;
+  };
+}
+
+let cachedResumeMtime = 0;
+let cachedResumeText = '';
+
+// Helper function to dynamically read and parse resume.pdf in realtime with caching
 async function getRealtimeResumeText(): Promise<string> {
   try {
     const resumePath = path.join(process.cwd(), 'public', 'resume.pdf');
     if (fs.existsSync(resumePath)) {
-      const buffer = fs.readFileSync(resumePath);
-      const { text } = await extractText(new Uint8Array(buffer));
-      if (Array.isArray(text)) {
-        return text.join('\n\n');
+      const stats = fs.statSync(resumePath);
+      if (stats.mtimeMs === cachedResumeMtime && cachedResumeText) {
+        return cachedResumeText;
       }
-      return text || '';
+
+      // Temporarily silence internal pdfjs font substitution warnings
+      const originalWarn = console.warn;
+      console.warn = () => {};
+      try {
+        const buffer = fs.readFileSync(resumePath);
+        const { text } = await extractText(new Uint8Array(buffer));
+        cachedResumeText = Array.isArray(text) ? text.join('\n\n') : (text || '');
+        cachedResumeMtime = stats.mtimeMs;
+      } finally {
+        console.warn = originalWarn;
+      }
+      return cachedResumeText;
     }
   } catch (err) {
-    console.warn("Could not parse realtime resume.pdf, using static fallback:", err);
+    // fallback gracefully
   }
   return '';
 }
