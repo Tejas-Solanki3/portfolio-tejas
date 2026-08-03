@@ -132,11 +132,12 @@ export default function Home() {
       );
     }
 
-    if (msg.type === "resume" && msg.data) {
+    if (msg.type === "resume") {
+      const resumeUrl = msg.data?.url || "/resume.pdf";
       return (
         <div className="flex flex-col gap-4 w-full sm:max-w-[500px] py-2">
-          <p className="text-neutral-800 text-[15px] leading-relaxed">{msg.content}</p>
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 bg-[#f7f7f7] rounded-[1.25rem] w-full border border-neutral-200/50 gap-4">
+          <p className="text-neutral-800 text-[15px] leading-relaxed">{msg.content || "Here is Tejas Solanki's resume:"}</p>
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-4 sm:p-6 bg-[#f7f7f7] rounded-[1.25rem] w-full border border-neutral-200/50 gap-4 shadow-sm">
             <div className="flex items-center gap-3 sm:gap-4 w-full sm:w-auto overflow-hidden">
               <div className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-white rounded-xl shadow-sm border border-neutral-200/50 flex-shrink-0">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 sm:w-6 sm:h-6 text-red-500">
@@ -148,17 +149,28 @@ export default function Home() {
                 </svg>
               </div>
               <div className="flex flex-col min-w-0">
-                <h4 className="font-bold text-neutral-900 text-[14px] sm:text-[15px] truncate">Tejas_Solanki_Resume</h4>
-                <p className="text-neutral-500 text-[11px] sm:text-xs mt-0.5 truncate">PDF • Updated July 2026 • 0.05 MB</p>
+                <h4 className="font-bold text-neutral-900 text-[14px] sm:text-[15px] truncate">Tejas_Solanki_Resume.pdf</h4>
+                <p className="text-neutral-500 text-[11px] sm:text-xs mt-0.5 truncate">PDF • Live Resume Document</p>
               </div>
             </div>
 
             <div className="flex items-center justify-end gap-2.5 w-full sm:w-auto sm:ml-4 flex-shrink-0">
-              <button onClick={() => setPreviewUrl(msg.data.url)} className="flex items-center justify-center flex-1 sm:flex-none w-auto sm:w-12 h-10 sm:h-12 bg-white text-neutral-700 rounded-xl sm:rounded-full shadow-sm hover:bg-neutral-50 transition-colors border border-neutral-200 px-4 sm:px-0" title="Preview Resume">
+              <button 
+                onClick={() => setPreviewUrl(resumeUrl)} 
+                className="flex items-center justify-center flex-1 sm:flex-none w-auto sm:w-12 h-10 sm:h-12 bg-white text-neutral-700 rounded-xl sm:rounded-full shadow-sm hover:bg-neutral-50 transition-colors border border-neutral-200 px-4 sm:px-0" 
+                title="Preview Resume"
+              >
                 <span className="sm:hidden font-medium text-sm mr-2">Preview</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
               </button>
-              <a href={msg.data.url} download className="flex items-center justify-center flex-1 sm:flex-none w-auto sm:w-12 h-10 sm:h-12 bg-[#0070f3] text-white rounded-xl sm:rounded-full shadow-sm hover:bg-[#0060df] transition-colors px-4 sm:px-0" title="Download Resume">
+              <a 
+                href={resumeUrl} 
+                download="Tejas_Solanki_Resume.pdf" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="flex items-center justify-center flex-1 sm:flex-none w-auto sm:w-12 h-10 sm:h-12 bg-[#0070f3] text-white rounded-xl sm:rounded-full shadow-sm hover:bg-[#0060df] transition-colors px-4 sm:px-0" 
+                title="Download Resume"
+              >
                 <span className="sm:hidden font-medium text-sm mr-2">Download</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 sm:w-5 sm:h-5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
               </a>
@@ -319,7 +331,10 @@ export default function Home() {
         {/* Interactive area (Input & Buttons) */}
         <motion.div layout className={`z-10 flex w-full flex-col items-center justify-center shrink-0 ${isChatMode ? 'mt-auto pb-4' : 'mt-2 md:px-0'}`}>
           {isChatMode ? (
-            <ChatInterface isChatMode={isChatMode} onSearch={handleSearch} isLoading={isLoading} />
+            <>
+              <ActionButtons isChatMode={isChatMode} onActionClick={handleSearch} />
+              <ChatInterface isChatMode={isChatMode} onSearch={handleSearch} isLoading={isLoading} />
+            </>
           ) : (
             <>
               <ChatInterface isChatMode={isChatMode} onSearch={handleSearch} isLoading={isLoading} />
