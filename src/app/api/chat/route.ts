@@ -50,15 +50,26 @@ async function getRealtimeResumeText(): Promise<string> {
   return '';
 }
 
-// Helper function to read project_knowledge.md in realtime
+// Helper function to read project knowledge/documentation markdown in realtime
 function getProjectKnowledgeText(): string {
-  try {
-    const mdPath = path.join(process.cwd(), 'public', 'project_knowledge.md');
-    if (fs.existsSync(mdPath)) {
-      return fs.readFileSync(mdPath, 'utf8');
+  const possiblePaths = [
+    path.join(process.cwd(), 'public', 'project_knowledge.md'),
+    path.join(process.cwd(), 'public', 'documentation.md'),
+    path.join(process.cwd(), 'public', 'projects.md'),
+    path.join(process.cwd(), 'public', 'docs.md'),
+    path.join(process.cwd(), 'project_knowledge.md'),
+    path.join(process.cwd(), 'documentation.md'),
+    path.join(process.cwd(), 'docs.md'),
+  ];
+
+  for (const p of possiblePaths) {
+    try {
+      if (fs.existsSync(p)) {
+        return fs.readFileSync(p, 'utf8');
+      }
+    } catch (err) {
+      // fallback gracefully
     }
-  } catch (err) {
-    // fallback gracefully
   }
   return '';
 }
