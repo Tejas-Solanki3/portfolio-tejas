@@ -29,9 +29,24 @@ export const portfolioData = {
     }
   ],
   achievements: [
-    "Winner – IMAGINE Hackathon (PIWOT 2025), a national-level hackathon organized by PanIIT Alumni India (Prize: ₹50,000)",
-    "Winner – ITM Buildathon 3.0, the college's flagship hackathon (Prize: ₹7,000)",
-    "Recognized as Hackathon Champion by ITM Group of Institutions for consistent hackathon performance"
+    {
+      title: "Winner – IMAGINE Hackathon (PIWOT 2025)",
+      description: "National-level hackathon organized by PanIIT Alumni India. Secured 1st place with ₹50,000 cash prize.",
+      badge: "National Winner (₹50,000)",
+      postUrl: "https://www.linkedin.com/posts/tejas-solanki2006_piwot2025-paniit-piwot-activity-7287469181233463297-UBkX?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
+    },
+    {
+      title: "Winner – ITM Buildathon 3.0",
+      description: "Flagship institutional hackathon victory competing among top engineering talent. Awarded ₹7,000 prize.",
+      badge: "1st Place Winner (₹7,000)",
+      postUrl: "https://www.linkedin.com/posts/tejas-solanki2006_winning-my-first-ever-hackathon-that-too-activity-7271488622648872960-qBZB?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
+    },
+    {
+      title: "Recognized as Hackathon Champion",
+      description: "Honored by ITM Group of Institutions for consistent excellence, engineering leadership, and innovation across competitive hackathons.",
+      badge: "Institutional Honor",
+      postUrl: "https://www.linkedin.com/posts/tejas-solanki2006_hackathon-technology-innovation-activity-7358092851802427392-fWgi?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
+    }
   ],
   contact: {
     linkedin: "https://linkedin.com/in/tejas-solanki",

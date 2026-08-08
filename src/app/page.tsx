@@ -159,28 +159,64 @@ export default function Home() {
 
     if (msg.type === "achievements" && msg.data) {
       return (
-        <div className="flex flex-col gap-4 w-full sm:max-w-[600px] py-4">
+        <div className="flex flex-col gap-4 w-full sm:max-w-[620px] py-4">
           <p className="whitespace-pre-line px-5 py-3.5 bg-white/90 backdrop-blur-md border border-neutral-200 text-neutral-800 rounded-3xl rounded-tl-sm w-fit text-[15px] leading-relaxed shadow-sm">
             {msg.content}
           </p>
           <div className="flex flex-col gap-3">
-            {msg.data.map((achievement: string, idx: number) => (
-              <div key={idx} className="flex items-start gap-3 bg-white/80 backdrop-blur-md border border-neutral-200/80 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all">
-                <div className="flex items-center justify-center w-8 h-8 bg-yellow-100 rounded-full flex-shrink-0 mt-0.5">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-yellow-600">
-                    <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
-                    <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
-                    <path d="M4 22h16"></path>
-                    <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
-                    <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
-                    <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
-                  </svg>
+            {Array.isArray(msg.data) && msg.data.map((item: any, idx: number) => {
+              const isObj = typeof item === 'object' && item !== null;
+              const title = isObj ? item.title : item;
+              const description = isObj ? item.description : null;
+              const badge = isObj ? item.badge : null;
+              const postUrl = isObj ? item.postUrl : null;
+
+              return (
+                <div key={idx} className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white/90 backdrop-blur-md border border-neutral-200/80 rounded-2xl p-4 shadow-sm hover:shadow-md transition-all">
+                  <div className="flex items-start gap-3">
+                    <div className="flex items-center justify-center w-8 h-8 bg-amber-100 rounded-full flex-shrink-0 mt-0.5">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4 text-amber-600">
+                        <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path>
+                        <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path>
+                        <path d="M4 22h16"></path>
+                        <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path>
+                        <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path>
+                        <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>
+                      </svg>
+                    </div>
+                    <div className="flex flex-col">
+                      <div className="flex flex-wrap items-center gap-2">
+                        <h4 className="text-[15px] font-bold text-neutral-900 leading-snug">
+                          {title}
+                        </h4>
+                        {badge && (
+                          <span className="text-[10px] font-bold px-2 py-0.5 bg-amber-50 border border-amber-200 text-amber-700 rounded-full">
+                            {badge}
+                          </span>
+                        )}
+                      </div>
+                      {description && (
+                        <p className="text-xs text-neutral-600 mt-1 leading-relaxed">
+                          {description}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+
+                  {postUrl && (
+                    <a
+                      href={postUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center gap-1.5 px-3 py-1.5 bg-neutral-900 text-white rounded-lg text-xs font-semibold hover:bg-black active:scale-95 transition-all shadow-sm flex-shrink-0 self-start sm:self-center ml-11 sm:ml-0"
+                    >
+                      <ExternalLink size={12} />
+                      View Post
+                    </a>
+                  )}
                 </div>
-                <p className="text-[15px] text-neutral-800 leading-relaxed font-medium">
-                  {achievement}
-                </p>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       );

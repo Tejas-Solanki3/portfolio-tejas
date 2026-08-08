@@ -133,3 +133,22 @@ Enabling controller-free, real-time gaming interaction by translating human body
 **Key AI & Problem-Solving Themes:**
 - Core strengths centered around Applied AI/ML, Computer Vision (MediaPipe, OpenCV, dlib), and LLM Orchestration & Automation.
 - Deep optimization of ML pipelines for production constraints (memory management, frame downscaling, low-latency inference).
+
+---
+
+## Key Achievements & Recognitions
+
+1. **Winner – IMAGINE Hackathon (PIWOT 2025)**
+   - **Organizer:** PanIIT Alumni India (National-level)
+   - **Prize:** ₹50,000 Cash Prize
+   - **Post Link:** https://www.linkedin.com/posts/tejas-solanki2006_piwot2025-paniit-piwot-activity-7287469181233463297-UBkX?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA
+
+2. **Winner – ITM Buildathon 3.0**
+   - **Organizer:** ITM Group of Institutions (Flagship Hackathon)
+   - **Prize:** ₹7,000 Cash Prize
+   - **Post Link:** https://www.linkedin.com/posts/tejas-solanki2006_winning-my-first-ever-hackathon-that-too-activity-7271488622648872960-qBZB?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA
+
+3. **Recognized as Hackathon Champion**
+   - **Organizer:** ITM Group of Institutions
+   - **Honor:** Recognized for consistent competitive hackathon victories and engineering leadership.
+   - **Post Link:** https://www.linkedin.com/posts/tejas-solanki2006_hackathon-technology-innovation-activity-7358092851802427392-fWgi?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA
