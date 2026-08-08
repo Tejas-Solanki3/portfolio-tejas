@@ -1,12 +1,12 @@
 export const portfolioData = {
   about: {
     name: "Tejas Solanki",
-    role: "AI Engineer | Software Developer | AI/ML Developer",
+    role: "AI / ML Engineer & Problem Solver",
     location: "India",
     education: "ITM Skills University '28",
     email: "tejassolanki176@gmail.com",
-    summary: "AI Engineer and Software Developer building production-ready applications in computer vision, automation, and applied machine learning. Experienced across Python and the MERN stack, with end-to-end ownership from backend architecture and REST API design through deployment. Actively expanding into Generative AI, LLMs, and prompt engineering to ship intelligent, automation-driven products.",
-    tags: ["Python", "MERN Stack", "Computer Vision", "GUI Automation", "Generative AI", "LLMs", "MediaPipe"]
+    summary: "AI / ML Engineer and Problem Solver focused on Applied Computer Vision, LLM Orchestration, and intelligent automation. I design and build production-grade AI systems — ranging from real-time biometric verification pipelines and sub-frame gesture inference to multi-service LLM agent workflows and desktop automation. Driven by tackling complex engineering challenges and delivering performant, high-impact products.",
+    tags: ["Applied AI / ML", "Computer Vision", "LLM Orchestration", "MediaPipe & OpenCV", "FastAPI & Python", "Intelligent Automation", "Problem Solving"]
   },
   experience: [
     {

@@ -224,16 +224,40 @@ export default function Home() {
 
     if (msg.type === "me" && msg.data) {
       return (
-        <div className="flex flex-col gap-3 w-full sm:max-w-[600px] py-2">
-          <p className="whitespace-pre-line text-neutral-800 text-[16px] leading-relaxed">
-            {msg.content}
-          </p>
-          <div className="flex flex-wrap gap-2 mt-2">
-            {msg.data.tags.map((tag: string, i: number) => (
-              <span key={i} className="px-3.5 py-1.5 bg-neutral-100/80 text-neutral-700 rounded-full text-xs font-semibold">
-                {tag}
+        <div className="flex flex-col gap-4 w-full sm:max-w-[620px] py-3">
+          <div className="bg-white/90 backdrop-blur-md border border-neutral-200/80 rounded-2xl p-5 shadow-sm flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 rounded-full overflow-hidden border border-neutral-200/80 bg-blue-100/60 shadow-sm flex-shrink-0">
+                <img src="/memoji.png" alt="Tejas Solanki" className="w-full h-full object-contain" />
+              </div>
+              <div className="flex flex-col">
+                <h3 className="text-base font-bold text-neutral-900 leading-tight">{msg.data.name || "Tejas Solanki"}</h3>
+                <span className="text-xs font-semibold text-blue-600">{msg.data.role || "AI / ML Engineer & Problem Solver"}</span>
+              </div>
+            </div>
+
+            <p className="whitespace-pre-line text-neutral-700 text-[14px] sm:text-[15px] leading-relaxed">
+              {msg.content}
+            </p>
+
+            <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-neutral-100 text-xs text-neutral-600">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-neutral-100 border border-neutral-200/60 rounded-md font-medium text-neutral-700">
+                🎓 {msg.data.education || "ITM Skills University '28"}
               </span>
-            ))}
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-neutral-100 border border-neutral-200/60 rounded-md font-medium text-neutral-700">
+                📍 {msg.data.location || "India"}
+              </span>
+            </div>
+
+            {msg.data.tags && (
+              <div className="flex flex-wrap gap-1.5 pt-1">
+                {msg.data.tags.map((tag: string, i: number) => (
+                  <span key={i} className="px-2.5 py-1 bg-blue-50 border border-blue-200/60 text-blue-800 rounded-md text-[11px] font-semibold">
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       );
