@@ -46,28 +46,34 @@ export const portfolioData = {
   ],
   projects: [
     {
-      title: "Gesture-Controlled Combat",
-      category: "AI-Powered Gaming",
-      description: "Built a real-time gesture-recognition system enabling controller-free gameplay of Street Fighter IV using live body-movement tracking. Combined MediaPipe pose tracking with OpenCV frame processing for low-latency computer vision inference, then mapped gestures to in-game actions using pynput.",
-      techstack: ["MediaPipe", "OpenCV", "pynput", "Python", "Computer Vision"]
-    },
-    {
       title: "SaveState",
-      category: "AI-Powered Attendance Automation",
-      description: "Built an automated attendance system that eliminates proxy check-ins using facial recognition, powered by a Python Flask backend, with a Next.js and MongoDB frontend for classroom scheduling and student email whitelisting. Optimized the pipeline with frame downscaling and garbage collection to prevent memory crashes and improve runtime stability in production.",
-      techstack: ["Python", "Flask", "Next.js", "MongoDB", "Facial Recognition", "OpenCV"]
-    },
-    {
-      title: "SecureExam Lite",
-      category: "EdTech & Proctoring",
-      description: "Built a browser-based AI proctoring tool using Flask, MediaPipe, and computer vision for real-time exam monitoring. Implemented selfie-based identity authentication and continuous face-activity tracking to detect and flag suspicious exam behavior.",
-      techstack: ["Flask", "MediaPipe", "Computer Vision", "Python"]
+      category: "Applied AI & Biometrics",
+      description: "Automated attendance system eliminating proxy check-ins via real-time facial verification using dlib ResNet-34 (99.38% accuracy). Designed an optimized ML inference pipeline with frame downscaling and manual garbage collection on Python Flask to operate within tight memory constraints, paired with a Next.js/MongoDB dashboard.",
+      techstack: ["Computer Vision", "Facial Recognition", "dlib ResNet-34", "Python", "Flask", "MongoDB", "Next.js"],
+      liveUrl: "https://save-state-ai.vercel.app",
+      demoUrl: "https://www.linkedin.com/posts/tejas-solanki2006_artificialintelligence-machinelearning-computervision-activity-7476485001300230144-wYX7?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
     },
     {
       title: "OttoAI",
-      category: "AI Agent & Automation",
-      description: "An intelligent AI agent built to streamline automation workflows and enhance user interaction. It provides advanced natural language processing capabilities to assist with complex queries and task execution.",
-      techstack: ["Python", "LLMs", "Generative AI", "Automation"]
+      category: "LLM Agent & Automation",
+      description: "Intelligent personal operations AI agent consolidating scattered daily workflows into an AI-orchestrated dashboard. Built with a FastAPI backend coordinating LLM pipelines across 4+ Google services (Gmail, Docs, Calendar, Fit) with full OAuth token flows for automated summarization and task execution.",
+      techstack: ["LLMs", "Generative AI", "FastAPI", "Python", "OAuth 2.0", "Workflow Automation"],
+      liveUrl: "https://otto-ai.vercel.app",
+      demoUrl: "https://www.linkedin.com/posts/tejas-solanki2006_buildinpublic-aiproducts-productengineering-activity-7464898309061599232-Kv75?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
+    },
+    {
+      title: "SecureExam Lite",
+      category: "AI Vision Proctoring",
+      description: "Browser-based AI proctoring prototype using Flask, MediaPipe, and OpenCV for real-time exam monitoring. Implemented multi-face anomaly detection and continuous face-presence tracking to flag suspicious exam behavior alongside auto-grading.",
+      techstack: ["MediaPipe", "Computer Vision", "OpenCV", "Flask", "Python"],
+      demoUrl: "https://www.linkedin.com/posts/tejas-solanki2006_edtech-ai-flask-activity-7363871384864727040-F9Dv?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
+    },
+    {
+      title: "Gesture-Controlled Combat",
+      category: "Pose Estimation & AI Gaming",
+      description: "Real-time gesture-recognition system enabling controller-free gameplay of Street Fighter IV using webcam body tracking. Combines MediaPipe 33-point pose estimation with OpenCV frame processing and pynput for sub-frame latency game move execution.",
+      techstack: ["MediaPipe", "OpenCV", "Pose Estimation", "pynput", "Python", "HCI"],
+      demoUrl: "https://www.linkedin.com/posts/tejas-solanki2006_artificialintelligence-computervision-gesturerecognition-activity-7346047514065707009-0B0E?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
     }
   ],
   resume: {
@@ -75,12 +81,14 @@ export const portfolioData = {
     filename: "Tejas_Solanki_Resume.pdf",
     lastUpdated: "August 2026"
   },
-  systemPrompt: `You are Tejas Solanki's personal AI assistant embedded in his portfolio website. Your job is to answer questions about Tejas using his live resume and portfolio context. 
+  systemPrompt: `You are Tejas Solanki's personal AI assistant embedded in his portfolio website. Your job is to answer questions about Tejas using his live resume, in-depth project knowledge, and portfolio context.
 
 Guidelines:
 - Be friendly, professional, and concise.
-- Accurately detail his projects (Gesture-Controlled Combat, SaveState, SecureExam Lite, OttoAI), experience (8bits Technologies, LetsUpgrade), achievements (PIWOT IMAGINE Hackathon winner ₹50,000, ITM Buildathon 3.0 winner ₹7,000, Hackathon Champion), and technical skills.
+- Core Identity & Priority: Tejas is primarily an AI / ML Engineer and Problem Solver specializing in Applied AI/ML, Computer Vision, LLMs, and Automation. Never describe him simply as a generic full-stack developer; highlight his deep problem-solving in AI/ML systems and engineering.
+- Accurately detail his projects (SaveState, OttoAI, SecureExam Lite, Gesture-Controlled Combat), experience (8bits Technologies, LetsUpgrade), achievements (PIWOT IMAGINE Hackathon winner ₹50,000, ITM Buildathon 3.0 winner ₹7,000, Hackathon Champion), and technical skills.
 - DO NOT mention that any projects were "built at a hackathon" or "won a hackathon". Discuss all projects strictly as professional engineering work.
+- When describing projects, you can share their live product links or LinkedIn video demo links if relevant.
 - If asked about contact or hiring, encourage them to reach out and use the contact form.
 - If a user asks something unrelated to Tejas, politely steer the conversation back to his portfolio.`
 };

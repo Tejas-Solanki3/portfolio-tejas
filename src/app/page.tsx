@@ -5,7 +5,7 @@ import ChatInterface from "@/components/ChatInterface";
 import FluidBackground from "@/components/FluidBackground";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { RotateCcw } from "lucide-react";
+import { RotateCcw, ExternalLink, Play } from "lucide-react";
 
 type Message = {
   role: 'user' | 'bot';
@@ -74,23 +74,55 @@ export default function Home() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {Array.isArray(msg.data) && msg.data.map((project: any, idx: number) => (
-              <div key={idx} className="bg-white/90 backdrop-blur-md border border-neutral-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col">
-                {project.category && (
-                  <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider mb-1">
-                    {project.category}
-                  </span>
-                )}
-                <h3 className="font-bold text-lg text-neutral-900 mb-1.5">{project.title}</h3>
-                <p className="text-sm text-neutral-600 mb-4 leading-relaxed">{project.description}</p>
-                {project.techstack && (
-                  <div className="flex flex-wrap gap-2 mt-auto">
-                    {project.techstack.map((tech: string, i: number) => (
-                      <span key={i} className="text-xs px-2.5 py-1 bg-neutral-100 border border-neutral-200/70 text-neutral-700 rounded-md font-medium">
-                        {tech}
-                      </span>
-                    ))}
-                  </div>
-                )}
+              <div key={idx} className="bg-white/90 backdrop-blur-md border border-neutral-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col justify-between">
+                <div>
+                  {project.category && (
+                    <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider mb-1 block">
+                      {project.category}
+                    </span>
+                  )}
+                  <h3 className="font-bold text-lg text-neutral-900 mb-1.5">{project.title}</h3>
+                  <p className="text-sm text-neutral-600 mb-4 leading-relaxed">{project.description}</p>
+                </div>
+
+                <div>
+                  {project.techstack && (
+                    <div className="flex flex-wrap gap-1.5 mb-4">
+                      {project.techstack.map((tech: string, i: number) => (
+                        <span key={i} className="text-[11px] px-2.5 py-1 bg-neutral-100 border border-neutral-200/70 text-neutral-700 rounded-md font-medium">
+                          {tech}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {(project.liveUrl || project.demoUrl) && (
+                    <div className="flex flex-wrap items-center gap-2 pt-3 border-t border-neutral-100">
+                      {project.liveUrl && (
+                        <a
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-blue-600 text-white rounded-lg text-xs font-semibold hover:bg-blue-700 active:scale-95 transition-all shadow-sm"
+                        >
+                          <ExternalLink size={12} />
+                          Live App
+                        </a>
+                      )}
+                      {project.demoUrl && (
+                        <a
+                          href={project.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-neutral-900 text-white rounded-lg text-xs font-semibold hover:bg-black active:scale-95 transition-all shadow-sm"
+                        >
+                          <Play size={11} className="fill-white" />
+                          Video Demo
+                        </a>
+                      )}
+                    </div>
+                  )}
+                </div>
               </div>
             ))}
           </div>
