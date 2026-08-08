@@ -5,6 +5,7 @@ import ChatInterface from "@/components/ChatInterface";
 import FluidBackground from "@/components/FluidBackground";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { RotateCcw } from "lucide-react";
 
 type Message = {
   role: 'user' | 'bot';
@@ -25,8 +26,15 @@ export default function Home() {
   };
 
   useEffect(() => {
-    scrollToBottom();
-  }, [messages, isLoading]);
+    if (isChatMode) {
+      scrollToBottom();
+    }
+  }, [messages, isLoading, isChatMode]);
+
+  const handleReset = () => {
+    setIsChatMode(false);
+    setMessages([]);
+  };
 
   const handleSearch = async (query: string) => {
     if (!query.trim()) return;
@@ -38,8 +46,8 @@ export default function Home() {
     setMessages(prev => [...prev, { role: 'user', content: query }]);
     setIsLoading(true);
 
-    // Artificial typing delay for 1.5 seconds
-    await new Promise(resolve => setTimeout(resolve, 1500));
+    // Artificial typing delay for 1.2 seconds for realistic feel
+    await new Promise(resolve => setTimeout(resolve, 1200));
 
     try {
       const res = await fetch('/api/chat', {
@@ -88,22 +96,19 @@ export default function Home() {
     if (msg.type === "skills" && msg.data) {
       return (
         <div className="flex flex-col gap-6 w-full sm:max-w-[600px] py-4">
-          <h2 className="text-3xl sm:text-4xl font-extrabold text-black tracking-tight mb-2">Skills & Expertise</h2>
-
-          <div className="flex flex-col gap-8">
+          <p className="whitespace-pre-line px-5 py-3.5 bg-white/90 backdrop-blur-md border border-neutral-200 text-neutral-800 rounded-3xl rounded-tl-sm w-fit text-[15px] leading-relaxed shadow-sm">
+            {msg.content}
+          </p>
+          <div className="flex flex-col gap-4">
             {msg.data.map((cat: any, idx: number) => (
-              <div key={idx} className="flex flex-col gap-3">
-                <div className="flex items-center gap-3">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-6 h-6 text-[#0070f3]">
-                    <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-                    <polyline points="2 12 12 17 22 12"></polyline>
-                    <polyline points="2 17 12 22 22 17"></polyline>
-                  </svg>
-                  <h3 className="text-[22px] font-bold text-black">{cat.category}</h3>
+              <div key={idx} className="flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                  <span className="w-2 h-2 rounded-full bg-neutral-400"></span>
+                  <span className="text-[14px] font-bold text-neutral-600 tracking-wide uppercase">{cat.category}</span>
                 </div>
                 <div className="flex flex-wrap gap-2.5 mt-1">
-                  {cat.skills.map((skill: string, i: number) => (
-                    <span key={i} className="px-4 py-2 bg-black text-white rounded-full text-[14px] font-medium leading-none flex items-center">
+                  {cat.skills && cat.skills.map((skill: string, i: number) => (
+                    <span key={i} className="px-4 py-2 bg-black text-white rounded-full text-[13px] font-medium shadow-sm hover:scale-105 transition-transform cursor-default">
                       {skill}
                     </span>
                   ))}
@@ -259,7 +264,6 @@ export default function Home() {
       );
     }
 
-    // Default text response
     return (
       <div className="max-w-[90%] text-[16px] leading-relaxed text-neutral-800 py-2">
         <p className="whitespace-pre-line">{msg.content}</p>
@@ -268,117 +272,141 @@ export default function Home() {
   };
 
   return (
-    <main className={`flex flex-col font-sans relative bg-transparent ${isChatMode ? 'h-[100dvh] overflow-hidden' : 'min-h-[100dvh] overflow-x-hidden'}`}>
+    <main className="flex flex-col font-sans relative bg-transparent h-[100dvh] overflow-hidden">
       <FluidBackground />
 
-      {/* Container without pointer-events-none to fix iOS Safari touch bug */}
-      <div className={`relative flex flex-col items-center w-full z-10 transition-all duration-700 ${isChatMode ? 'h-full pt-4 pb-4 px-4' : 'flex-1 justify-center px-4 py-8 md:py-16'}`}>
-
-        {/* Background text (hidden in chat mode) */}
-        <div className={`absolute inset-x-0 bottom-0 flex justify-center overflow-hidden transition-opacity duration-500 pointer-events-none ${isChatMode ? 'opacity-0' : 'opacity-100'}`}>
-          <div className="hidden bg-gradient-to-b from-neutral-500/10 to-neutral-500/0 bg-clip-text text-[10rem] leading-none font-black text-transparent select-none sm:block lg:text-[16rem]" style={{ marginBottom: "-2.5rem" }}>
-            Portfolio
-          </div>
-        </div>
-
-        {/* Header/Memoji Area */}
-        <motion.div layout className={`flex flex-col-reverse items-center shrink-0 z-20 ${isChatMode ? 'flex-row gap-3 w-full max-w-3xl justify-start items-center mb-6 bg-transparent' : 'mt-4 md:mt-12 mb-6 md:mb-8 text-center relative'}`}>
-
-          {/* Memoji */}
+      <AnimatePresence mode="wait">
+        {!isChatMode ? (
           <motion.div
-            layout
-            onClick={() => { window.location.href = '/'; }}
-            className={`relative overflow-hidden bg-white/10 cursor-pointer title="Back to home" ${isChatMode ? 'h-10 w-10 sm:h-12 sm:w-12 rounded-full border-2 border-white/50 shadow-md hover:scale-110' : 'h-36 w-36 sm:h-48 sm:w-48 md:h-56 md:w-56 mt-6 md:mt-8 shadow-none rounded-[2rem] hover:scale-105'}`}
-            transition={{ type: "spring", stiffness: 300, damping: 30 }}
+            key="home-view"
+            initial={{ opacity: 0, scale: 0.98 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.97, y: -10 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative flex flex-col items-center justify-center w-full h-full z-10 px-4 py-6 overflow-y-auto"
           >
-            <img
-              src="/memoji.png"
-              alt="Tejas Memoji"
-              className="w-full h-full object-contain scale-[1.0]"
-              onError={(e) => {
-                e.currentTarget.style.display = 'none';
-                const parent = e.currentTarget.parentElement;
-                if (parent) {
-                  parent.innerHTML = '<div class="w-full h-full bg-gradient-to-b from-blue-200 to-blue-400 dark:from-blue-900 dark:to-blue-950 flex items-center justify-center relative"><span class="' + (isChatMode ? 'text-2xl' : 'text-8xl') + '">👤</span></div>';
-                }
-              }}
-            />
-          </motion.div>
+            <div className="absolute inset-x-0 bottom-0 flex justify-center overflow-hidden pointer-events-none opacity-100">
+              <div className="hidden bg-gradient-to-b from-neutral-500/10 to-neutral-500/0 bg-clip-text text-[10rem] leading-none font-black text-transparent select-none sm:block lg:text-[16rem]" style={{ marginBottom: "-2.5rem" }}>
+                Portfolio
+              </div>
+            </div>
 
-          {/* Hero text */}
-          <motion.div layout className={`pointer-events-none ${isChatMode ? 'text-left' : 'flex flex-col items-center text-center md:mb-6'}`}>
-            <motion.h2 layout className={`text-neutral-800 font-bold ${isChatMode ? 'text-sm' : 'mt-1 text-2xl md:text-3xl'}`}>
-              {isChatMode ? "Tejas Solanki" : "Hey, I'm Tejas Solanki"}
-            </motion.h2>
-            <motion.h1 layout className={`font-black tracking-tight text-neutral-900 ${isChatMode ? 'text-lg tracking-normal' : 'text-5xl sm:text-6xl md:text-7xl lg:text-8xl mt-1'}`}>
-              {isChatMode ? "Software Developer" : "Software Developer & AI/ML"}
-            </motion.h1>
-          </motion.div>
-        </motion.div>
+            <div className="flex flex-col items-center text-center z-20 w-full max-w-4xl">
+              <div className="relative overflow-hidden bg-white/10 rounded-[2rem] h-32 w-32 sm:h-44 sm:w-44 md:h-52 md:w-52 mb-4 hover:scale-105 transition-transform duration-300">
+                <img
+                  src="/memoji.png"
+                  alt="Tejas Memoji"
+                  className="w-full h-full object-contain"
+                  onError={(e) => {
+                    e.currentTarget.style.display = 'none';
+                    const parent = e.currentTarget.parentElement;
+                    if (parent) {
+                      parent.innerHTML = '<div class="w-full h-full bg-gradient-to-b from-blue-200 to-blue-400 dark:from-blue-900 dark:to-blue-950 flex items-center justify-center relative"><span class="text-7xl sm:text-8xl">👤</span></div>';
+                    }
+                  }}
+                />
+              </div>
 
-        {/* Chat Results Area */}
-        {isChatMode && (
-          <div className="flex-1 min-h-0 w-full max-w-3xl overflow-y-auto px-2 flex flex-col gap-6 mb-4" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
-            <AnimatePresence initial={false}>
-              {messages.map((msg, i) => (
-                <motion.div 
-                  key={i} 
-                  initial={{ opacity: 0, y: 15, scale: 0.95 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                  className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-                >
-                  {msg.role === 'user' ? (
-                    <div className="px-5 py-3.5 bg-blue-500 text-white rounded-3xl rounded-tr-sm max-w-[85%] text-[15px] leading-relaxed shadow-sm">
-                      {msg.content}
+              <div className="pointer-events-none flex flex-col items-center text-center mb-6">
+                <h2 className="text-neutral-800 font-bold text-xl sm:text-2xl md:text-3xl">
+                  Hey, I'm Tejas Solanki
+                </h2>
+                <h1 className="font-black tracking-tight text-neutral-900 text-4xl sm:text-6xl md:text-7xl lg:text-8xl mt-1">
+                  Software Developer & AI/ML
+                </h1>
+              </div>
+
+              <div className="w-full flex flex-col items-center justify-center z-30">
+                <ChatInterface isChatMode={false} onSearch={handleSearch} isLoading={isLoading} />
+                <ActionButtons isChatMode={false} onActionClick={handleSearch} />
+              </div>
+            </div>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="chat-view"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="relative flex flex-col items-center w-full h-full z-10 px-3 sm:px-4 py-3 max-w-3xl mx-auto"
+          >
+            <div className="w-full flex items-center justify-between py-2 px-3 sm:px-4 bg-white/70 backdrop-blur-md rounded-2xl border border-neutral-200/70 shadow-sm shrink-0 mb-3">
+              <button
+                onClick={handleReset}
+                className="flex items-center gap-2.5 hover:opacity-80 transition-opacity text-left group"
+                title="Return to Home"
+              >
+                <div className="h-9 w-9 sm:h-10 sm:w-10 rounded-full overflow-hidden border border-white/60 bg-blue-100 shadow-sm flex-shrink-0 group-hover:scale-105 transition-transform">
+                  <img src="/memoji.png" alt="Tejas" className="w-full h-full object-contain" />
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-sm font-bold text-neutral-900 leading-tight">Tejas Solanki</span>
+                  <span className="text-[11px] text-neutral-500 font-medium">Software Developer & AI/ML</span>
+                </div>
+              </button>
+
+              <button
+                onClick={handleReset}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-neutral-100 hover:bg-neutral-200/80 text-neutral-700 text-xs font-medium transition-colors border border-neutral-200/60 shadow-2xs"
+                title="New Chat / Home"
+              >
+                <RotateCcw size={13} className="text-neutral-600" />
+                <span className="hidden sm:inline">New Chat</span>
+              </button>
+            </div>
+
+            <div className="flex-1 min-h-0 w-full overflow-y-auto px-1 sm:px-2 flex flex-col gap-5 mb-2" style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <AnimatePresence initial={false}>
+                {messages.map((msg, i) => (
+                  <motion.div 
+                    key={i} 
+                    initial={{ opacity: 0, y: 12, scale: 0.98 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                    className={`flex w-full ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
+                  >
+                    {msg.role === 'user' ? (
+                      <div className="px-5 py-3.5 bg-blue-500 text-white rounded-3xl rounded-tr-sm max-w-[85%] text-[15px] leading-relaxed shadow-sm">
+                        {msg.content}
+                      </div>
+                    ) : (
+                      renderBotMessage(msg)
+                    )}
+                  </motion.div>
+                ))}
+                {isLoading && (
+                  <motion.div 
+                    key="loader"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, scale: 0.95 }}
+                    className="flex w-full justify-start"
+                  >
+                    <div className="px-5 py-4 bg-white/80 backdrop-blur-md border border-neutral-200/70 rounded-3xl rounded-tl-sm flex gap-1.5 items-center h-[50px] shadow-sm">
+                      <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                      <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                      <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                     </div>
-                  ) : (
-                    renderBotMessage(msg)
-                  )}
-                </motion.div>
-              ))}
-              {isLoading && (
-                <motion.div 
-                  key="loader"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.9 }}
-                  className="flex w-full justify-start"
-                >
-                  <div className="px-5 py-4 bg-white/60 dark:bg-neutral-800/80 backdrop-blur-md border border-neutral-200/50 dark:border-neutral-700/50 rounded-3xl rounded-tl-sm flex gap-1 items-center h-[52px]">
-                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                    <span className="w-1.5 h-1.5 bg-neutral-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
-                  </div>
-                </motion.div>
-              )}
-            </AnimatePresence>
-            <div ref={chatEndRef} />
-          </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+              <div ref={chatEndRef} />
+            </div>
+
+            <div className="w-full flex flex-col items-center justify-center shrink-0 gap-1.5">
+              <ActionButtons isChatMode={true} onActionClick={handleSearch} />
+              <ChatInterface isChatMode={true} onSearch={handleSearch} isLoading={isLoading} />
+            </div>
+          </motion.div>
         )}
+      </AnimatePresence>
 
-        {/* Interactive area (Input & Buttons) */}
-        <motion.div layout className={`z-10 flex w-full flex-col items-center justify-center shrink-0 ${isChatMode ? 'mt-auto pb-4' : 'mt-2 md:px-0'}`}>
-          {isChatMode ? (
-            <>
-              <ActionButtons isChatMode={isChatMode} onActionClick={handleSearch} />
-              <ChatInterface isChatMode={isChatMode} onSearch={handleSearch} isLoading={isLoading} />
-            </>
-          ) : (
-            <>
-              <ChatInterface isChatMode={isChatMode} onSearch={handleSearch} isLoading={isLoading} />
-              <ActionButtons isChatMode={isChatMode} onActionClick={handleSearch} />
-            </>
-          )}
-        </motion.div>
-      </div>
-
-      {/* PDF Preview Modal */}
       {previewUrl && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 md:p-12 bg-black/60 backdrop-blur-sm animate-fade-in" onClick={() => setPreviewUrl(null)}>
           <div className="relative w-full max-w-5xl h-full max-h-[90vh] bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-scale-in" onClick={e => e.stopPropagation()}>
             <div className="absolute top-4 right-6 flex items-center gap-3 z-10">
-              <a href={previewUrl} download className="px-4 py-2 bg-blue-600/90 backdrop-blur-md hover:bg-blue-600 text-white text-sm font-medium rounded-full transition-colors shadow-lg flex items-center gap-2 border border-white/20">
+              <a href={previewUrl} download="Tejas_Solanki_Resume.pdf" className="px-4 py-2 bg-blue-600/90 backdrop-blur-md hover:bg-blue-600 text-white text-sm font-medium rounded-full transition-colors shadow-lg flex items-center gap-2 border border-white/20">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                 Download
               </a>
