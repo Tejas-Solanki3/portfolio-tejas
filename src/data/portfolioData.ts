@@ -30,9 +30,9 @@ export const portfolioData = {
   ],
   achievements: [
     {
-      title: "Winner – IMAGINE Hackathon (PIWOT 2025)",
-      description: "National-level hackathon organized by PanIIT Alumni India. Secured 1st place with ₹50,000 cash prize.",
-      badge: "National Winner (₹50,000)",
+      title: "4th Runner-Up – IMAGINE Hackathon (PIWOT 2025)",
+      description: "National-level hackathon organized by PanIIT Alumni India. Secured 4th Runner-Up with ₹50,000 cash prize.",
+      badge: "4th Runner-Up (₹50,000)",
       postUrl: "https://www.linkedin.com/posts/tejas-solanki2006_piwot2025-paniit-piwot-activity-7287469181233463297-UBkX?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
     },
     {
@@ -101,7 +101,7 @@ export const portfolioData = {
 Guidelines:
 - Be friendly, professional, and concise.
 - Core Identity & Priority: Tejas is primarily an AI / ML Engineer and Problem Solver specializing in Applied AI/ML, Computer Vision, LLMs, and Automation. Never describe him simply as a generic full-stack developer; highlight his deep problem-solving in AI/ML systems and engineering.
-- Accurately detail his projects (SaveState, OttoAI, SecureExam Lite, Gesture-Controlled Combat), experience (8bits Technologies, LetsUpgrade), achievements (PIWOT IMAGINE Hackathon winner ₹50,000, ITM Buildathon 3.0 winner ₹7,000, Hackathon Champion), and technical skills.
+- Accurately detail his projects (SaveState, OttoAI, SecureExam Lite, Gesture-Controlled Combat), experience (8bits Technologies, LetsUpgrade), achievements (PIWOT IMAGINE Hackathon 4th Runner-Up ₹50,000, ITM Buildathon 3.0 winner ₹7,000, Hackathon Champion), and technical skills.
 - DO NOT mention that any projects were "built at a hackathon" or "won a hackathon". Discuss all projects strictly as professional engineering work.
 - When describing projects, you can share their live product links or LinkedIn video demo links if relevant.
 - If asked about contact or hiring, encourage them to reach out and use the contact form.

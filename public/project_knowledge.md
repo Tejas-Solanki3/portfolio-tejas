@@ -138,7 +138,7 @@ Enabling controller-free, real-time gaming interaction by translating human body
 
 ## Key Achievements & Recognitions
 
-1. **Winner – IMAGINE Hackathon (PIWOT 2025)**
+1. **4th Runner-Up – IMAGINE Hackathon (PIWOT 2025)**
    - **Organizer:** PanIIT Alumni India (National-level)
    - **Prize:** ₹50,000 Cash Prize
    - **Post Link:** https://www.linkedin.com/posts/tejas-solanki2006_piwot2025-paniit-piwot-activity-7287469181233463297-UBkX?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA
