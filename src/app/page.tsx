@@ -26,10 +26,8 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (isChatMode) {
-      scrollToBottom();
-    }
-  }, [messages, isLoading, isChatMode]);
+    scrollToBottom();
+  }, [messages, isLoading]);
 
   const handleReset = () => {
     setIsChatMode(false);
@@ -75,17 +73,24 @@ export default function Home() {
             {msg.content}
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {msg.data.map((project: any, idx: number) => (
+            {Array.isArray(msg.data) && msg.data.map((project: any, idx: number) => (
               <div key={idx} className="bg-white/90 backdrop-blur-md border border-neutral-200/80 rounded-2xl p-5 shadow-sm hover:shadow-md transition-all flex flex-col">
+                {project.category && (
+                  <span className="text-[11px] font-bold text-blue-600 uppercase tracking-wider mb-1">
+                    {project.category}
+                  </span>
+                )}
                 <h3 className="font-bold text-lg text-neutral-900 mb-1.5">{project.title}</h3>
                 <p className="text-sm text-neutral-600 mb-4 leading-relaxed">{project.description}</p>
-                <div className="flex flex-wrap gap-2 mt-auto">
-                  {project.techstack.map((tech: string, i: number) => (
-                    <span key={i} className="text-xs px-2.5 py-1 bg-neutral-100 border border-neutral-200/70 text-neutral-700 rounded-md font-medium">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
+                {project.techstack && (
+                  <div className="flex flex-wrap gap-2 mt-auto">
+                    {project.techstack.map((tech: string, i: number) => (
+                      <span key={i} className="text-xs px-2.5 py-1 bg-neutral-100 border border-neutral-200/70 text-neutral-700 rounded-md font-medium">
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                )}
               </div>
             ))}
           </div>

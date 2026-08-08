@@ -65,19 +65,65 @@ function getProjectKnowledgeText(): string {
 
 export async function POST(req: Request) {
   try {
-    const openrouter = createOpenRouter({
-      apiKey: process.env.OPENROUTER_API_KEY || '',
-    });
-
     const { message } = await req.json();
     const cleanMsg = (message || '').trim().toLowerCase();
 
-    // Fetch realtime text from public/resume.pdf
+    // Fast and 100% reliable handling for action buttons & exact queries
+    if (cleanMsg === 'projects' || cleanMsg === 'show projects' || cleanMsg === 'view projects') {
+      return NextResponse.json({
+        type: 'projects',
+        response: "Here are some of the featured projects Tejas has built across AI/ML, computer vision, and full-stack development:",
+        data: portfolioData.projects
+      });
+    }
+
+    if (cleanMsg === 'skills' || cleanMsg === 'show skills' || cleanMsg === 'view skills') {
+      return NextResponse.json({
+        type: 'skills',
+        response: "Here is a breakdown of Tejas's technical skills and expertise across AI/ML, backend, databases, and frontend:",
+        data: portfolioData.skills
+      });
+    }
+
+    if (cleanMsg === 'achievements' || cleanMsg === 'show achievements' || cleanMsg === 'victories' || cleanMsg === 'awards') {
+      return NextResponse.json({
+        type: 'achievements',
+        response: "Here are some of Tejas's notable achievements and competitive victories:",
+        data: portfolioData.achievements
+      });
+    }
+
+    if (cleanMsg === 'me' || cleanMsg === 'about' || cleanMsg === 'who are you') {
+      return NextResponse.json({
+        type: 'me',
+        response: portfolioData.about.summary,
+        data: portfolioData.about
+      });
+    }
+
+    if (cleanMsg === 'contact' || cleanMsg === 'contact me' || cleanMsg === 'hire' || cleanMsg === 'reach out') {
+      return NextResponse.json({
+        type: 'contact',
+        response: "You can reach out to Tejas directly via email or connect with him on LinkedIn and GitHub:",
+        data: portfolioData.contact
+      });
+    }
+
+    if (cleanMsg === 'resume' || cleanMsg === 'cv' || cleanMsg.includes('download resume') || cleanMsg.includes('view resume')) {
+      return NextResponse.json({
+        type: 'resume',
+        response: "Here is Tejas Solanki's resume. You can preview it directly or download a copy below:",
+        data: { url: "/resume.pdf", title: "Tejas_Solanki_Resume.pdf" }
+      });
+    }
+
+    // Fetch realtime text from public/resume.pdf and project_knowledge.md
     const resumeText = await getRealtimeResumeText();
     const projectKnowledge = getProjectKnowledgeText();
 
-    // Check for explicit keywords to guarantee fast & accurate card rendering
-    const isResumeQuery = cleanMsg === 'resume' || cleanMsg.includes('resume') || cleanMsg.includes(' cv') || cleanMsg === 'cv' || cleanMsg.includes('download resume');
+    const openrouter = createOpenRouter({
+      apiKey: process.env.OPENROUTER_API_KEY || '',
+    });
 
     // Generate intelligent response using OpenRouter
     const { object } = await generateObject({
@@ -98,23 +144,21 @@ export async function POST(req: Request) {
       ${JSON.stringify(portfolioData, null, 2)}
       
       INSTRUCTIONS FOR TYPE:
-      - If the user asks for resume, CV, or downloading/viewing his resume, ALWAYS set type to 'resume'.
-      - If the user asks to see or learn about projects, set type to 'projects'.
-      - If they ask for skills or technologies, set type to 'skills'.
-      - If they ask for contact info or how to hire/reach, set type to 'contact'.
-      - If they ask about Tejas's achievements, hackathons, or victories, set type to 'achievements'.
+      - If the user asks for resume, CV, or downloading/viewing his resume, set type to 'resume'.
+      - If the user asks to see all projects or list his portfolio projects, set type to 'projects'.
+      - If they ask for skills or technical stack, set type to 'skills'.
+      - If they ask for contact info or how to reach/hire him, set type to 'contact'.
+      - If they ask about Tejas's achievements or victories, set type to 'achievements'.
       - If they ask about Tejas generally (who is he, bio), set type to 'me'.
-      - For all other conversational questions, set type to 'text'.
+      - For all other detailed project explanations or questions, set type to 'text'.
       
       CRITICAL FORMATTING RULE: 
       Do NOT use any markdown formatting in your response. Do not use **bold**, do not use ## headers, do not use bullet points. Write everything in plain, natural text.`,
       prompt: message,
     });
 
-    const finalType = isResumeQuery ? 'resume' : object.type;
-
     let data = null;
-    switch (finalType) {
+    switch (object.type) {
       case 'projects':
         data = portfolioData.projects;
         break;
@@ -136,7 +180,7 @@ export async function POST(req: Request) {
     }
 
     return NextResponse.json({ 
-      type: finalType, 
+      type: object.type, 
       response: object.response, 
       data 
     });
