@@ -395,11 +395,11 @@ export default function Home() {
                 />
               </div>
 
-              <div className="pointer-events-none flex flex-col items-center text-center mb-5 max-w-xl px-2">
-                <h2 className="text-neutral-700 font-semibold text-base sm:text-lg md:text-xl">
+              <div className="pointer-events-none flex flex-col items-center text-center mb-6 max-w-3xl px-2">
+                <h2 className="text-neutral-800 font-bold text-lg sm:text-xl md:text-2xl">
                   Hey, I'm Tejas Solanki
                 </h2>
-                <h1 className="font-bold tracking-tight text-neutral-900 text-2xl sm:text-4xl md:text-5xl mt-1 leading-tight">
+                <h1 className="font-black tracking-tight text-neutral-900 text-3xl sm:text-5xl md:text-6xl mt-1.5 leading-[1.1]">
                   AI Engineer & Software Developer
                 </h1>
               </div>
