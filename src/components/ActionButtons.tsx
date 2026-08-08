@@ -1,6 +1,6 @@
 "use client";
 
-import { Smile, BriefcaseBusiness, Layers, UserRoundSearch, FileText } from "lucide-react";
+import { Smile, BriefcaseBusiness, Layers, UserRoundSearch, FileText, Trophy } from "lucide-react";
 import { LiquidButton } from "@/components/ui/liquid-glass-button";
 
 interface ActionButtonsProps {
@@ -13,6 +13,7 @@ export default function ActionButtons({ isChatMode, onActionClick }: ActionButto
     { label: "Me", icon: Smile },
     { label: "Projects", icon: BriefcaseBusiness },
     { label: "Skills", icon: Layers },
+    { label: "Achievements", icon: Trophy },
     { label: "Contact", icon: UserRoundSearch },
     { label: "Resume", icon: FileText },
   ];

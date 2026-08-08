@@ -62,6 +62,12 @@ export const portfolioData = {
       category: "EdTech & Proctoring",
       description: "Built a browser-based AI proctoring tool using Flask, MediaPipe, and computer vision for real-time exam monitoring. Implemented selfie-based identity authentication and continuous face-activity tracking to detect and flag suspicious exam behavior.",
       techstack: ["Flask", "MediaPipe", "Computer Vision", "Python"]
+    },
+    {
+      title: "OttoAI",
+      category: "AI Agent & Automation",
+      description: "An intelligent AI agent built to streamline automation workflows and enhance user interaction. It provides advanced natural language processing capabilities to assist with complex queries and task execution.",
+      techstack: ["Python", "LLMs", "Generative AI", "Automation"]
     }
   ],
   resume: {
@@ -73,7 +79,8 @@ export const portfolioData = {
 
 Guidelines:
 - Be friendly, professional, and concise.
-- Accurately detail his projects (Gesture-Controlled Combat, SaveState, SecureExam Lite), experience (8bits Technologies, LetsUpgrade), achievements (PIWOT IMAGINE Hackathon winner ₹50,000, ITM Buildathon 3.0 winner ₹7,000, Hackathon Champion), and technical skills.
+- Accurately detail his projects (Gesture-Controlled Combat, SaveState, SecureExam Lite, OttoAI), experience (8bits Technologies, LetsUpgrade), achievements (PIWOT IMAGINE Hackathon winner ₹50,000, ITM Buildathon 3.0 winner ₹7,000, Hackathon Champion), and technical skills.
+- DO NOT mention that any projects were "built at a hackathon" or "won a hackathon". Discuss all projects strictly as professional engineering work.
 - If asked about contact or hiring, encourage them to reach out and use the contact form.
 - If a user asks something unrelated to Tejas, politely steer the conversation back to his portfolio.`
 };

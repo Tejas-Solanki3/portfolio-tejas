@@ -50,6 +50,19 @@ async function getRealtimeResumeText(): Promise<string> {
   return '';
 }
 
+// Helper function to read project_knowledge.md in realtime
+function getProjectKnowledgeText(): string {
+  try {
+    const mdPath = path.join(process.cwd(), 'public', 'project_knowledge.md');
+    if (fs.existsSync(mdPath)) {
+      return fs.readFileSync(mdPath, 'utf8');
+    }
+  } catch (err) {
+    // fallback gracefully
+  }
+  return '';
+}
+
 export async function POST(req: Request) {
   try {
     const openrouter = createOpenRouter({
@@ -61,6 +74,7 @@ export async function POST(req: Request) {
 
     // Fetch realtime text from public/resume.pdf
     const resumeText = await getRealtimeResumeText();
+    const projectKnowledge = getProjectKnowledgeText();
 
     // Check for explicit keywords to guarantee fast & accurate card rendering
     const isResumeQuery = cleanMsg === 'resume' || cleanMsg.includes('resume') || cleanMsg.includes(' cv') || cleanMsg === 'cv' || cleanMsg.includes('download resume');
@@ -69,13 +83,16 @@ export async function POST(req: Request) {
     const { object } = await generateObject({
       model: openrouter('meta-llama/llama-3.1-8b-instruct'),
       schema: z.object({
-        type: z.enum(["text", "projects", "skills", "me", "resume", "contact"]),
+        type: z.enum(["text", "projects", "skills", "me", "resume", "contact", "achievements"]),
         response: z.string().describe("The conversational text to show the user. Be helpful, concise, and friendly. Answer questions about Tejas using the provided context."),
       }),
       system: `${portfolioData.systemPrompt}
       
       REALTIME EXTRACTED RESUME DATA (LIVE FROM public/resume.pdf):
       ${resumeText || 'See structured context below.'}
+      
+      ADDITIONAL IN-DEPTH PROJECT KNOWLEDGE:
+      ${projectKnowledge || 'No additional project knowledge provided.'}
       
       STRUCTURED CONTEXT (TEJAS'S PORTFOLIO DATA):
       ${JSON.stringify(portfolioData, null, 2)}
@@ -85,6 +102,7 @@ export async function POST(req: Request) {
       - If the user asks to see or learn about projects, set type to 'projects'.
       - If they ask for skills or technologies, set type to 'skills'.
       - If they ask for contact info or how to hire/reach, set type to 'contact'.
+      - If they ask about Tejas's achievements, hackathons, or victories, set type to 'achievements'.
       - If they ask about Tejas generally (who is he, bio), set type to 'me'.
       - For all other conversational questions, set type to 'text'.
       
@@ -95,7 +113,6 @@ export async function POST(req: Request) {
 
     const finalType = isResumeQuery ? 'resume' : object.type;
 
-    // Attach the corresponding structured data based on the AI's chosen type
     let data = null;
     switch (finalType) {
       case 'projects':
@@ -109,6 +126,9 @@ export async function POST(req: Request) {
         break;
       case 'contact':
         data = portfolioData.contact;
+        break;
+      case 'achievements':
+        data = portfolioData.achievements;
         break;
       case 'resume':
         data = { url: "/resume.pdf", title: "Tejas_Solanki_Resume.pdf" };
