@@ -25,6 +25,21 @@ export default function FluidBackground() {
     if (!isInitialized) return; // Wait until we know if it's mobile or not
     if (isMobile) return; // Completely disable fluid simulation on mobile devices
 
+    // Intercept and stop webgl-fluid's built-in Space and 'P' key listeners from triggering splats/pauses
+    const blockFluidKeySplashes = (e: KeyboardEvent) => {
+      if (
+        e.code === 'Space' ||
+        e.key === ' ' ||
+        e.code === 'KeyP' ||
+        e.key === 'p' ||
+        e.key === 'P'
+      ) {
+        e.stopImmediatePropagation();
+      }
+    };
+
+    window.addEventListener('keydown', blockFluidKeySplashes, { capture: true });
+
     if (canvasRef.current) {
       webGLFluidSimulation(canvasRef.current, {
         IMMEDIATE: false,
@@ -66,6 +81,7 @@ export default function FluidBackground() {
       events.forEach(ev => window.addEventListener(ev, forwardEvent, { passive: true }));
       
       return () => {
+        window.removeEventListener('keydown', blockFluidKeySplashes, { capture: true });
         events.forEach(ev => window.removeEventListener(ev, forwardEvent));
       };
     }
