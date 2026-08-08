@@ -47,7 +47,7 @@ export const portfolioData = {
     }
   ],
   contact: {
-    linkedin: "https://linkedin.com/in/tejas-solanki",
+    linkedin: "https://www.linkedin.com/in/tejas-solanki2006/",
     github: "https://github.com/Tejas-Solanki3",
     email: "tejassolanki176@gmail.com"
   },
