@@ -1,18 +1,16 @@
 export const portfolioData = {
   about: {
     name: "Tejas Solanki",
-    role: "AI / ML Engineer & Problem Solver",
-    location: "India",
-    education: "ITM Skills University '28",
+    role: "AI Engineer & Software Developer",
     email: "tejassolanki176@gmail.com",
-    summary: "AI / ML Engineer and Problem Solver focused on Applied Computer Vision, LLM Orchestration, and intelligent automation. I design and build production-grade AI systems — ranging from real-time biometric verification pipelines and sub-frame gesture inference to multi-service LLM agent workflows and desktop automation. Driven by tackling complex engineering challenges and delivering performant, high-impact products.",
-    tags: ["Applied AI / ML", "Computer Vision", "LLM Orchestration", "MediaPipe & OpenCV", "FastAPI & Python", "Intelligent Automation", "Problem Solving"]
+    summary: "AI Engineer and Software Developer building production-grade intelligent systems, LLM agents, and automation workflows. I develop robust AI solutions, from multi-service LLM orchestration and real-time computer vision to scalable backend architectures and desktop automation. Driven by tackling complex engineering challenges and delivering performant, high-impact products.",
+    tags: ["AI Engineering", "LLM Orchestration", "Applied Machine Learning", "Computer Vision", "Python & FastAPI", "Intelligent Automation", "Backend Systems"]
   },
   experience: [
     {
       role: "Software Developer Intern",
       company: "8bits Technologies",
-      period: "April 2026 - Present, Sept 2025 - Dec 2025",
+      period: "April 2026 to Present, Sept 2025 to Dec 2025",
       highlights: [
         "Engineered GUI automation solutions for Windows desktop applications in Python using the pywinauto library, streamlining repetitive client workflows",
         "Designed and shipped custom automation scripts that reduced manual work and improved operational efficiency across client projects, applying strong software engineering and debugging practices"
@@ -21,7 +19,7 @@ export const portfolioData = {
     {
       role: "EdTech Platform Intern",
       company: "LetsUpgrade",
-      period: "Dec 2024 - Jan 2025",
+      period: "Dec 2024 to Jan 2025",
       highlights: [
         "Gained hands-on exposure to EdTech platform development, contributing to user engagement strategies and feature planning",
         "Applied platform design principles, technology integration, and scalability considerations to support product development decisions"
@@ -30,13 +28,13 @@ export const portfolioData = {
   ],
   achievements: [
     {
-      title: "4th Runner-Up – IMAGINE Hackathon (PIWOT 2025)",
+      title: "4th Runner-Up: IMAGINE Hackathon (PIWOT 2025)",
       description: "National-level hackathon organized by PanIIT Alumni India. Secured 4th Runner-Up with ₹50,000 cash prize.",
       badge: "4th Runner-Up (₹50,000)",
       postUrl: "https://www.linkedin.com/posts/tejas-solanki2006_piwot2025-paniit-piwot-activity-7287469181233463297-UBkX?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"
     },
     {
-      title: "Winner – ITM Buildathon 3.0",
+      title: "Winner: ITM Buildathon 3.0",
       description: "Flagship institutional hackathon victory competing among top engineering talent. Awarded ₹7,000 prize.",
       badge: "1st Place Winner (₹7,000)",
       postUrl: "https://www.linkedin.com/posts/tejas-solanki2006_winning-my-first-ever-hackathon-that-too-activity-7271488622648872960-qBZB?utm_source=social_share_send&utm_medium=member_desktop_web&rcm=ACoAAFCWA4gB2R3sDQHcQenTUy7gk2tIfsC18cA"

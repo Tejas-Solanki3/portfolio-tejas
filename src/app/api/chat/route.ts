@@ -83,7 +83,7 @@ export async function POST(req: Request) {
     if (cleanMsg === 'projects' || cleanMsg === 'show projects' || cleanMsg === 'view projects') {
       return NextResponse.json({
         type: 'projects',
-        response: "Here are some of the featured projects Tejas has built across AI/ML, computer vision, and full-stack development:",
+        response: "Here are the featured projects Tejas has built across AI engineering, LLMs, computer vision, and intelligent automation:",
         data: portfolioData.projects
       });
     }
